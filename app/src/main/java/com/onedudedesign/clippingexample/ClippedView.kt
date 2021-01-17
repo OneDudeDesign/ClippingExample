@@ -1,6 +1,8 @@
 package com.onedudedesign.clippingexample
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -43,6 +45,71 @@ class ClippedView @JvmOverloads constructor(
     private val rowFour = rowThree + rectInset + clipRectBottom
     private val textRow = rowFour + (1.5f * clipRectBottom)
 
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        drawBackAndUnclippedRectangle(canvas)
+//        drawDifferenceClippingExample(canvas)
+//        drawCircularClippingExample(canvas)
+//        drawIntersectionClippingExample(canvas)
+//        drawCombinedClippingExample(canvas)
+//        drawRoundedRectangleClippingExample(canvas)
+//        drawOutsideClippingExample(canvas)
+//        drawSkewedTextExample(canvas)
+//        drawTranslatedTextExample(canvas)
+        // drawQuickRejectExample(canvas)
+    }
 
+    private fun drawClippedRectangle(canvas: Canvas){
+        canvas.clipRect(clipRectLeft,clipRectTop,clipRectRight,clipRectBottom)
+        canvas.drawColor(Color.WHITE)
+        paint.color = Color.RED
+        canvas.drawLine(clipRectLeft,clipRectTop,clipRectRight,clipRectBottom,paint)
+        paint.color = Color.GREEN
+        canvas.drawCircle(circleRadius,clipRectBottom-circleRadius, circleRadius,paint)
+        paint.color = Color.BLUE
+        paint.textSize = textSize
+        paint.textAlign = Paint.Align.RIGHT
+        canvas.drawText(context.getString(R.string.clipping),clipRectRight,textOffset,paint)
+    }
+
+//    private fun drawTranslatedTextExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawSkewedTextExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawOutsideClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawRoundedRectangleClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawCombinedClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawIntersectionClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawCircularClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun drawDifferenceClippingExample(canvas: Canvas) {
+//        TODO("Not yet implemented")
+//    }
+
+    private fun drawBackAndUnclippedRectangle(canvas: Canvas){
+        canvas.drawColor(Color.GRAY)
+        canvas.save()
+        canvas.translate(columnOne,rowOne)
+        drawClippedRectangle(canvas)
+        canvas.restore()
+    }
 
 }
